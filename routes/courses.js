@@ -59,14 +59,14 @@ router.post(
 		const user = req.currentUser;
 		const { title, description, estimatedTime, materialsNeeded } = req.body;
 		try {
-			await Course.create({
+			const newCreatedCourse = await Course.create({
 				title,
 				description,
 				estimatedTime,
 				materialsNeeded,
 				userId: user.userId,
 			});
-			res.status(201).location('/').end();
+			res.status(201).location(`/api/courses/${newCreatedCourse.id}`).end();
 		} catch (error) {
 			// Check if the error is coming from sequelize's "SequelizeValidationError"
 			const errorName = error.name;
